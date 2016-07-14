@@ -12,12 +12,12 @@ import Criterion.Main
 
 main :: IO ()
 main = defaultMain
-    [ env (B.readFile "./escape.txt") $ \ t -> bgroup "escape.json" (go t)
-    , env (B.readFile "./noescape.txt") $ \ t -> bgroup "noescape.json" (go t)
+    [ env (B.readFile "./escape.txt") $ \ t -> bgroup "escape.txt" (go t)
+    , env (B.readFile "./noescape.txt") $ \ t -> bgroup "noescape.txt" (go t)
     ]
 
 go :: B.ByteString -> [Benchmark]
 go bs =
-    [ bench "aeson parser"       $ nf (AT.parse AE.jstring) bs
+    [ bench "aeson parser"       $ nf (AT.parseOnly AE.jstring) bs
     , bench "json-stream parser" $ nf (JS.parseByteString JS.string) bs
     ]
